@@ -57,11 +57,22 @@ public class WindowGraph : MonoBehaviour
     {
         GameObject connection = new GameObject("dot Connection", typeof(Image));
         connection.transform.SetParent(_graphContainer, false);
+        connection.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
         RectTransform rectTransform = connection.GetComponent<RectTransform>();
+
+        Vector2 direction = (dotPositionB - dotPositionA).normalized;
+        //
+        float angleInRadians = Mathf.Atan2(direction.y, direction.x); // Obtener el ángulo en radianes
+        float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
+        //
+        float disctance = Vector2.Distance(dotPositionA, dotPositionB);
+
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
         rectTransform.sizeDelta = new Vector2(100, 3f);
         rectTransform.anchoredPosition = dotPositionA;
+
+        rectTransform.localEulerAngles = new Vector3(0,0, angleInDegrees);
 
     }
     // Update is called once per frame
