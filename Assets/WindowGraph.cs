@@ -7,11 +7,14 @@ public class WindowGraph : MonoBehaviour
 {
     [SerializeField] private RectTransform _graphContainer;
     [SerializeField] private Sprite _circleSp;
-
+    [SerializeField] private  LineRenderer _connectionLine;
     // Start is called before the first frame update
+    private List<Vector3> _values;
     void Start()
     {
-       
+       // _connectionLine = gameObject.AddComponent<LineRenderer>();
+        _connectionLine.startWidth = 2;
+        _connectionLine.endWidth = 2;
         
     }
     private GameObject CreateCircle(Vector2 circlePosition)
@@ -28,10 +31,27 @@ public class WindowGraph : MonoBehaviour
     }
     private void Awake()
     {
-        
+        _values = new List<Vector3>();
+         /*{
+             new Vector3(100,2,20),
+           new Vector3(13,20,51),
+           new Vector3(200,10,1),
+
+         };*/
+
+
+
         //CreateCircle(new Vector2(100, 20));
         List<float> values = new List<float>() { 5, 2, 6, 8, 10, 16, 17, 20, 25, 2 };
         ShowGraph(values);
+    }
+    void PosicitionsConnection()
+    {
+        //_connectionLine.SetPositions()
+        _connectionLine.positionCount = _values.Count;
+
+        // Asigna las posiciones al LineRenderer
+        _connectionLine.SetPositions(_values.ToArray());
     }
     void ShowGraph(List<float> temperature_values)
     {
@@ -43,13 +63,19 @@ public class WindowGraph : MonoBehaviour
         {
             float xPosition =xSize+ i * xSize;
             float yPosition = (temperature_values[i] / yMax) * GraphHeight;
-            GameObject circleGameObject =  CreateCircle(new Vector2(xPosition, yPosition));
+            Vector3 _valuePoint = new Vector3(xPosition, yPosition, 0);
+            GameObject circleGameObject =  CreateCircle(_valuePoint);
+            _values.Add(_valuePoint);
             if (lastCircleGameObject != null) 
             { 
                 CreateDotConnection(lastCircleGameObject.GetComponent<RectTransform>().anchoredPosition, circleGameObject.GetComponent<RectTransform>().anchoredPosition);
             }
 
             lastCircleGameObject= circleGameObject;
+        }
+        for(int i = 0; i<_values.Count; i++)
+        {
+            Debug.Log(_values[i]);
         }
         
     }
