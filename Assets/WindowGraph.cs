@@ -13,8 +13,7 @@ public class WindowGraph : MonoBehaviour
     void Start()
     {
         _connectionLine.useWorldSpace = false;
-        //_connectionLine.transform.
-        _connectionLine.transform.InverseTransformDirection(_graphContainer.transform.position);
+        //_connectionLine.transform.InverseTransformDirection(_graphContainer.transform.position);
         _connectionLine.startWidth = 2;
         _connectionLine.endWidth = 2;
 
@@ -45,7 +44,7 @@ public class WindowGraph : MonoBehaviour
     }
     void ShowGraph(List<float> temperature_values)
     {
-        float xSize = 20f;
+        float xSize = 25f;
         float yMax = 100f;  
         float GraphHeight = _graphContainer.sizeDelta.y;
         GameObject lastCircleGameObject = null;
